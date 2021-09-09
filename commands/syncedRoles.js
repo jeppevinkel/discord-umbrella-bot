@@ -1,11 +1,17 @@
 const { SlashCommandBuilder} = require('@discordjs/builders')
-const { MessageEmbed } = require('discord.js')
+const { MessageEmbed, Permissions} = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('synced-roles')
         .setDescription('Lists currently synced roles.'),
     async execute(interaction) {
+        const adminRole = interaction.client.settings.get(interaction.guild.id, 'adminRole')
+        if (!(interaction.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES) || interaction.member.roles.cache.has(role => role.name === adminRole))) {
+            await interaction.reply(`You have insufficient permissions to use this command.`)
+            return;
+        }
+
         const syncedRoles = interaction.client.settings.get(interaction.guild.id, `syncedRoles`)
 
         const myEmbed = new MessageEmbed()
