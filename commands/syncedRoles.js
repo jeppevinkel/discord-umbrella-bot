@@ -18,6 +18,12 @@ module.exports = {
             .setTitle("Synced Roles")
 
         for (const mainRole in syncedRoles) {
+            if (syncedRoles[mainRole].length === 0) {
+                console.log("deleting", mainRole)
+                interaction.client.settings.delete(interaction.guild.id, `syncedRoles.${mainRole}`)
+                continue;
+            }
+
             const myMainRole = interaction.guild.roles.cache.get(mainRole)
 
             const mySubRoles = []

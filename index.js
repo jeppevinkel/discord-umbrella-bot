@@ -3,12 +3,12 @@ const Config = require('./config.json')
 const {Client, Intents, Collection} = require("discord.js")
 const Enmap = require('enmap')
 
-const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS]})
+const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_PRESENCES]})
 
 client.commands = new Collection()
-const commantFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
 
-for (const file of commantFiles) {
+for (const file of commandFiles) {
     const command = require(`./commands/${file}`)
 
     client.commands.set(command.data.name, command)
