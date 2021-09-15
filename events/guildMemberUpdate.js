@@ -24,7 +24,7 @@ module.exports = {
             for (const role of newRoles) {
                 Object.keys(syncedRoles).forEach(key => {
                     let syncedRole = syncedRoles[key]
-                    let shouldGet = syncedRole.includes(role)
+                    let shouldGet = syncedRole.includes(role) && !oldRoles.includes(key)
                     // console.log("Should get:", shouldGet, ":", syncedRole, ":", role, ":", key)
 
                     if (shouldGet) rolesToAdd.push(key)
